@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Data</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            width: 100px;
+            height: 100px;
+        }
+        video {
+            width: 320px;
+            height: 240px;
+        }
+    </style>
+</head>
+<body>
+    <h1>News Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Product ID</th>
+                <th>Images</th>
+                <th>Videos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.id }}</td>
+                <td>
+                    {% for img in item.images %}
+                        <img src="{{ img }}" alt="{{ item.name }}">
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for video in item.videos %}
+                        <video autoplay muted>
+                            <source src="{{ video }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div>
+        {% if page > 1 %}
+        <button>
+            <a href="{{ url_for('get_data', page=page-1) }}">Previous</a>
+        </button>
+        {% endif %}
+        <button>
+            <a href="{{ url_for('get_data', page=page+1) }}">Next</a>
+        </button>
+    </div>
+</body>
+</html>
